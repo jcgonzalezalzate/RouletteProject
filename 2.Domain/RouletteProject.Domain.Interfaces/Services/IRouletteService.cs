@@ -1,14 +1,11 @@
-﻿namespace RouletteProject.Application.Interfaces
+﻿namespace RouletteProject.Domain.Interfaces.Services
 {
-    using Domain.Entities;
-    using Generics;
     using System;
 
-
-    public interface IRouletteApplication : IGenericApplication<Roulette>
+    public interface IRouletteService
     {
         Guid Create();
-        
+
         bool OpenRoulette(Guid id);
 
         bool Bet(Guid userId, int numberToBet);

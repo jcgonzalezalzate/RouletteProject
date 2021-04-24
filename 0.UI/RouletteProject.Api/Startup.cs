@@ -47,7 +47,9 @@ namespace RouletteProject.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Roulette}/{action=Get}/{id?}");
             });
         }
     }

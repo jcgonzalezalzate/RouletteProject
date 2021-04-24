@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RouletteProject.Domain.Entities.Generics;
 using RouletteProject.Domain.Interfaces.Repositories;
 using RouletteProject.Domain.Interfaces.Services;
@@ -19,7 +20,7 @@ namespace RouletteProject.Domain.Services.Generics
             return GenericRepository.GetAll();
         }
 
-        public virtual T Details(int id)
+        public virtual T Details(Guid id)
         {
             return GenericRepository.Details(i => i.Id == id);
         }
@@ -34,7 +35,7 @@ namespace RouletteProject.Domain.Services.Generics
             return GenericRepository.Edit(entity);
         }
 
-        public virtual T Delete(int id)
+        public virtual T Delete(Guid id)
         {
             return GenericRepository.Delete(id);
         }

@@ -1,4 +1,5 @@
-﻿using RouletteProject.Domain.Interfaces.Services;
+﻿using System;
+using RouletteProject.Domain.Interfaces.Services;
 using RouletteProject.Infrastructure.Helpers;
 
 namespace RouletteProject.Application.Services.Generics
@@ -20,7 +21,7 @@ namespace RouletteProject.Application.Services.Generics
             return CatchErrorHelper.Try(() => GenericService.GetAll());
         }
 
-        public T Details(int id)
+        public T Details(Guid id)
         {
             return CatchErrorHelper.Try(() => GenericService.Details(id));
         }
@@ -35,7 +36,7 @@ namespace RouletteProject.Application.Services.Generics
             return CatchErrorHelper.Try(() => GenericService.Edit(entity));
         }
 
-        public T Delete(int id)
+        public T Delete(Guid id)
         {
             return CatchErrorHelper.Try(() => GenericService.Delete(id));
         }

@@ -36,7 +36,7 @@
             return entity;
         }
 
-        public T Delete(int id)
+        public T Delete(Guid id)
         {
             return null;
         }

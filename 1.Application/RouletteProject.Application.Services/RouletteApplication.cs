@@ -1,4 +1,6 @@
-﻿using RouletteProject.Domain.Interfaces.Services;
+﻿using System;
+using RouletteProject.Domain.Interfaces.Services;
+using RouletteProject.Infrastructure.Helpers;
 
 namespace RouletteProject.Application.Services
 {
@@ -8,8 +10,32 @@ namespace RouletteProject.Application.Services
 
     public class RouletteApplication : GenericApplication<Roulette>, IRouletteApplication
     {
-        public RouletteApplication(IGenericService<Roulette> genericService) : base(genericService)
+        protected readonly IRouletteService RouletteService;
+
+
+        public RouletteApplication(IGenericService<Roulette> genericService, IRouletteService rouletteService) : base(genericService)
         {
+            this.RouletteService = rouletteService;
+        }
+
+        public Guid Create()
+        {
+            return CatchErrorHelper.Try(() => this.RouletteService.Create());
+        }
+
+        public bool OpenRoulette(Guid id)
+        {
+            return CatchErrorHelper.Try(() => this.RouletteService.OpenRoulette(id: id));
+        }
+
+        public bool Bet(Guid userId, int numberToBet)
+        {
+            return CatchErrorHelper.Try(() => this.RouletteService.Bet(userId: userId, numberToBet: numberToBet));
+        }
+
+        public bool CloseRoulette(Guid id)
+        {
+            return CatchErrorHelper.Try(() => this.RouletteService.CloseRoulette(id: id));
         }
     }
 }

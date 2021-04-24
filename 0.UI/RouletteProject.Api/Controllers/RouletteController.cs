@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RouletteProject.Domain.Entities;
+using RouletteProject.Application.Interfaces;
 
 namespace RouletteProject.Api.Controllers
 {
@@ -12,21 +13,46 @@ namespace RouletteProject.Api.Controllers
     [Route("[controller]")]
     public class RouletteController : ControllerBase
     {
-        private readonly ILogger<RouletteController> _logger;
+        protected readonly IRouletteApplication RouletteApplication;
 
-        public RouletteController(ILogger<RouletteController> logger)
+        public RouletteController(IRouletteApplication rouletteAplication)
         {
-            _logger = logger;
+            this.RouletteApplication = rouletteAplication;
+        }
+
+        [HttpPost]
+        [Route("Create")]
+        public Guid Create()
+        {
+            return this.RouletteApplication.Create();
+        }
+
+        [HttpPut]
+        [Route("OpenRoulette")]
+        public bool OpenRoulette(Guid id)
+        {
+            return this.RouletteApplication.OpenRoulette(id: id);
+        }
+
+        [HttpPost]
+        [Route("Bet")]
+        public bool Bet([FromHeader] Guid userId, [FromBody] int numberToBet)
+        {
+            return this.RouletteApplication.Bet(userId, numberToBet);
+        }
+
+        [HttpPut]
+        [Route("CloseRoulette")]
+        public bool CloseRoulette(Guid id)
+        {
+            return this.RouletteApplication.CloseRoulette(id: id);
         }
 
         [HttpGet]
-        public Roulette Get()
+        [Route("GetAll")]
+        public IEnumerable<Roulette> GetAll()
         {
-            return new Roulette
-            {
-                Id = 1,
-                Name = "name 1"
-            };
+            return this.RouletteApplication.GetAll();
         }
     }
 }

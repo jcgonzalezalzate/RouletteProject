@@ -6,6 +6,6 @@
     [Table("Roulette")]
     public class Roulette : GenericEntity
     {
-        public string Name { get; set; }
+        public RouletteState State { get; set; }
     }
 }

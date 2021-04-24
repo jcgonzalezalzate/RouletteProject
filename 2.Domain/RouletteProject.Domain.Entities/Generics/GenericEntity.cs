@@ -8,6 +8,6 @@ namespace RouletteProject.Domain.Entities.Generics
     public class GenericEntity
     {
         [Key] 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

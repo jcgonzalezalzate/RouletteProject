@@ -14,6 +14,6 @@
 
         T Edit(T entity);
 
-        T Delete(int id);
+        T Delete(Guid id);
     }
 }
