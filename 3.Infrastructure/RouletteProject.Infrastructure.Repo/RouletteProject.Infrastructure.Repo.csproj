@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\2.Domain\RouletteProject.Domain.Entities\RouletteProject.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\2.Domain\RouletteProject.Domain.Interfaces\RouletteProject.Domain.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
