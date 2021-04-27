@@ -1,4 +1,6 @@
-﻿namespace RouletteProject.Infrastructure.Repo.Generics
+﻿using Amazon.DynamoDBv2.DataModel;
+
+namespace RouletteProject.Infrastructure.Repo.Generics
 {
     using Domain.Interfaces.Repositories;
     using System;
@@ -18,27 +20,34 @@
 
         public List<T> GetAll()
         {
-            return null;
+            var conditions = new List<ScanCondition>();
+            var result = this.RepositoryContext.ScanAsync<T>(conditions).GetRemainingAsync();
+
+            return result.Result;
         }
 
-        public T Details(Expression<Func<T, bool>> expression)
+        public T Details(Guid id)
         {
-            return null;
+            var result = this.RepositoryContext.LoadAsync<T>(id, new DynamoDBContextConfig { ConsistentRead = true });
+            return result.Result;
         }
 
         public T Create(T entity)
         {
+            this.RepositoryContext.SaveAsync(entity);
             return entity;
         }
 
         public T Edit(T entity)
         {
+            this.RepositoryContext.SaveAsync(entity);
             return entity;
         }
 
-        public T Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            return null;
+            var result = this.RepositoryContext.DeleteAsync<T>(id);
+            return result.IsCompleted;
         }
     }
 }

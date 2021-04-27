@@ -1,9 +1,11 @@
 ﻿namespace RouletteProject.Domain.Services
 {
+    using Entities;
+    using Entities.Enums;
+    using Interfaces.Repositories;
+    using Interfaces.Services;
     using System;
-    using RouletteProject.Domain.Interfaces.Services;
-    using RouletteProject.Domain.Entities;
-    using RouletteProject.Domain.Interfaces.Repositories;
+    using System.Collections.Generic;
 
     public class RouletteService : IRouletteService
     {
@@ -14,29 +16,24 @@
             RouletteRepository = rouletteRepository;
         }
 
-        public Guid Create()
+        public Guid Create(Roulette roulette)
         {
-            var roulette = new Roulette();
-            roulette.Id = Guid.NewGuid();
-            roulette.State = RouletteState.Open;
             var entity = this.RouletteRepository.Create(roulette);
 
             return entity.Id;
         }
 
-        public bool OpenRoulette(Guid id)
+        public bool OpenRoulette(Roulette roulette)
         {
-            return this.RouletteRepository.OpenRoulette(id);
+            return this.RouletteRepository.OpenRoulette(roulette);
         }
-
-        public bool Bet(Guid userId, int numberToBet)
+        
+        public IEnumerable<Bet> CloseRoulette(Roulette roulette)
         {
-            return this.RouletteRepository.Bet(userId: userId, numberToBet: numberToBet);
-        }
-
-        public bool CloseRoulette(Guid id)
-        {
-            return this.RouletteRepository.CloseRoulette(id);
+            roulette.WinningNumber = new Random().Next(0, 36);
+            roulette.WinningColour = roulette.WinningNumber % 2 == 0 ? Colour.Red : Colour.Black;
+            
+            return this.RouletteRepository.CloseRoulette(roulette);
         }
     }
 }

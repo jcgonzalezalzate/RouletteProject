@@ -3,16 +3,14 @@
     using Domain.Entities;
     using Generics;
     using System;
-
+    using System.Collections.Generic;
 
     public interface IRouletteApplication : IGenericApplication<Roulette>
     {
-        Guid Create();
+        Guid Create(Roulette roulette);
         
-        bool OpenRoulette(Guid id);
+        bool OpenRoulette(Roulette roulette);
 
-        bool Bet(Guid userId, int numberToBet);
-        
-        bool CloseRoulette(Guid id);
+        IEnumerable<Bet> CloseRoulette(Roulette roulette);
     }
 }

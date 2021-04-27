@@ -1,15 +1,12 @@
-﻿using System;
-
-namespace RouletteProject.Domain.Interfaces.Repositories
+﻿namespace RouletteProject.Domain.Interfaces.Repositories
 {
     using Entities;
+    using System.Collections.Generic;
 
     public interface IRouletteRepository : IGenericRepository<Roulette>
     {
-        bool OpenRoulette(Guid id);
-        
-        bool Bet(Guid userId, int numberToBet);
-        
-        bool CloseRoulette(Guid id);
+        bool OpenRoulette(Roulette roulette);
+
+        IEnumerable<Bet> CloseRoulette(Roulette roulette);
     }
 }

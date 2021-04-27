@@ -1,12 +1,12 @@
-﻿using System;
-using RouletteProject.Domain.Interfaces.Services;
-using RouletteProject.Infrastructure.Helpers;
-
-namespace RouletteProject.Application.Services
+﻿namespace RouletteProject.Application.Services
 {
     using Domain.Entities;
+    using Domain.Interfaces.Services;
     using Generics;
+    using Infrastructure.Helpers;
     using Interfaces;
+    using System;
+    using System.Collections.Generic;
 
     public class RouletteApplication : GenericApplication<Roulette>, IRouletteApplication
     {
@@ -18,24 +18,19 @@ namespace RouletteProject.Application.Services
             this.RouletteService = rouletteService;
         }
 
-        public Guid Create()
+        public Guid Create(Roulette roulette)
         {
-            return CatchErrorHelper.Try(() => this.RouletteService.Create());
+            return CatchErrorHelper.Try(() => this.RouletteService.Create(roulette));
         }
 
-        public bool OpenRoulette(Guid id)
+        public bool OpenRoulette(Roulette roulette)
         {
-            return CatchErrorHelper.Try(() => this.RouletteService.OpenRoulette(id: id));
+            return CatchErrorHelper.Try(() => this.RouletteService.OpenRoulette(roulette));
         }
-
-        public bool Bet(Guid userId, int numberToBet)
+        
+        public IEnumerable<Bet> CloseRoulette(Roulette roulette)
         {
-            return CatchErrorHelper.Try(() => this.RouletteService.Bet(userId: userId, numberToBet: numberToBet));
-        }
-
-        public bool CloseRoulette(Guid id)
-        {
-            return CatchErrorHelper.Try(() => this.RouletteService.CloseRoulette(id: id));
+            return CatchErrorHelper.Try(() => this.RouletteService.CloseRoulette(roulette));
         }
     }
 }

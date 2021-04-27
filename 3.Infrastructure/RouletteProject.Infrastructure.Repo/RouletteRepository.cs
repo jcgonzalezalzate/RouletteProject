@@ -1,29 +1,28 @@
-﻿using System;
-
-namespace RouletteProject.Infrastructure.Repo
+﻿namespace RouletteProject.Infrastructure.Repo
 {
     using Domain.Entities;
-    using Generics;
     using Domain.Interfaces.Repositories;
+    using Generics;
+    using System.Collections.Generic;
 
     public class RouletteRepository : GenericRepository<Roulette>, IRouletteRepository
     {
+        private RepositoryContext RepositoryContext { get; set; };
+
         public RouletteRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
+            RepositoryContext = repositoryContext;
         }
 
-        public bool OpenRoulette(Guid id)
+        public bool OpenRoulette(Roulette roulette)
         {
+            this.RepositoryContext.SaveAsync(roulette);
             return true;
         }
-
-        public bool Bet(Guid userId, int numberToBet)
+        
+        public bool CloseRoulette(Roulette roulette)
         {
-            return true;
-        }
-
-        public bool CloseRoulette(Guid id)
-        {
+            this.RepositoryContext.SaveAsync(roulette);
             return true;
         }
     }

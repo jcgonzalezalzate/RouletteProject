@@ -1,15 +1,15 @@
 ﻿namespace RouletteProject.Domain.Interfaces.Services
 {
+    using Entities;
     using System;
+    using System.Collections.Generic;
 
     public interface IRouletteService
     {
-        Guid Create();
+        Guid Create(Roulette roulette);
 
-        bool OpenRoulette(Guid id);
+        bool OpenRoulette(Roulette roulette);
 
-        bool Bet(Guid userId, int numberToBet);
-        
-        bool CloseRoulette(Guid id);
+        IEnumerable<Bet> CloseRoulette(Roulette roulette);
     }
 }
