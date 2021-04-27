@@ -6,8 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using RouletteProject.Domain.Entities;
 using RouletteProject.Application.Interfaces;
+using RouletteProject.Domain.Entities.Enums;
 
-namespace RouletteProject.Api.Controllers
+namespace RouletteProject.ApiRest.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -24,28 +25,24 @@ namespace RouletteProject.Api.Controllers
         [Route("Create")]
         public Guid Create()
         {
-            return this.RouletteApplication.Create();
+            var roulette = new Roulette { Id = Guid.NewGuid(), State = RouletteState.Open };
+            return this.RouletteApplication.Create(roulette);
         }
 
         [HttpPut]
         [Route("OpenRoulette")]
         public bool OpenRoulette(Guid id)
         {
-            return this.RouletteApplication.OpenRoulette(id: id);
+            var roulette = new Roulette { Id = id, OpenDateTime = DateTime.UtcNow };
+            return this.RouletteApplication.OpenRoulette(roulette);
         }
-
-        [HttpPost]
-        [Route("Bet")]
-        public bool Bet([FromHeader] Guid userId, [FromBody] int numberToBet)
-        {
-            return this.RouletteApplication.Bet(userId, numberToBet);
-        }
-
+        
         [HttpPut]
         [Route("CloseRoulette")]
-        public bool CloseRoulette(Guid id)
+        public IEnumerable<Bet> CloseRoulette(Guid id)
         {
-            return this.RouletteApplication.CloseRoulette(id: id);
+            var roulette = new Roulette { Id = id, CloseDateTime = DateTime.UtcNow, State = RouletteState.Close};
+            return this.RouletteApplication.CloseRoulette(roulette);
         }
 
         [HttpGet]

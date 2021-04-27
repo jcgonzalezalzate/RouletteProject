@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  rouletteproject.api:
+    image: rouletteapi
+    environment:
+      ASPNETCORE_URLS: "http://+:45656"
+    ports:
+      - 45656:45656
+    depends_on: 
+      - rouletteproject.cache
+      - rouletteproject.dynamo
+
+  rouletteproject.cache:
+    image: redis:alpine3.13
+
+  rouletteproject.dynamo:
+    image: amazon/dynamodb-local
