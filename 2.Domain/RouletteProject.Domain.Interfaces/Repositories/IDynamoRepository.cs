@@ -3,10 +3,8 @@
     using Entities;
     using System.Collections.Generic;
 
-    public interface IRouletteRepository : IGenericRepository<Roulette>
+    public interface IDynamoRepository : IGenericRepository<Roulette>
     {
-        bool OpenRoulette(Roulette roulette);
-
         IEnumerable<Bet> CloseRoulette(Roulette roulette);
     }
 }

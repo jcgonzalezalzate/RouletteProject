@@ -13,6 +13,6 @@
 
         T Edit(T entity);
 
-        T Delete(Guid id);
+        bool Delete(Guid id);
     }
 }

@@ -2,7 +2,8 @@
 {
     public enum RouletteState
     {
-        Close,
-        Open
+        Created = 0,
+        Closed = 1,
+        Opened = 2
     }
 }

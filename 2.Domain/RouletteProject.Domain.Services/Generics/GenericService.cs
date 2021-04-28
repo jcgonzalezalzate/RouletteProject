@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using RouletteProject.Domain.Entities.Generics;
-using RouletteProject.Domain.Interfaces.Repositories;
-using RouletteProject.Domain.Interfaces.Services;
-
-namespace RouletteProject.Domain.Services.Generics
+﻿namespace RouletteProject.Domain.Services.Generics
 {
+    using Entities.Generics;
+    using Interfaces.Repositories;
+    using Interfaces.Services;
+    using System;
+    using System.Collections.Generic;
+
     public class GenericService<T> : IGenericService<T> where T : GenericEntity
     {
         public IGenericRepository<T> GenericRepository { get; set; }
@@ -22,7 +22,7 @@ namespace RouletteProject.Domain.Services.Generics
 
         public virtual T Details(Guid id)
         {
-            return GenericRepository.Details(i => i.Id == id);
+            return GenericRepository.Details(id);
         }
 
         public virtual T Create(T entity)
@@ -35,7 +35,7 @@ namespace RouletteProject.Domain.Services.Generics
             return GenericRepository.Edit(entity);
         }
 
-        public virtual T Delete(Guid id)
+        public virtual bool Delete(Guid id)
         {
             return GenericRepository.Delete(id);
         }

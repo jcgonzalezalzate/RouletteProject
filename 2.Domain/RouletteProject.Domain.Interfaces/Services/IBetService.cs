@@ -1,9 +1,14 @@
 ﻿namespace RouletteProject.Domain.Interfaces.Services
 {
-    using Domain.Entities;
+    using Entities;
+    using System;
 
     public interface IBetService
     {
-        bool SaveABet(Bet bet);
+        Bet GetABet(Guid id);
+
+        bool IsValidBet(Bet bet);
+
+        void AssignPrize(Bet bet);
     }
 }

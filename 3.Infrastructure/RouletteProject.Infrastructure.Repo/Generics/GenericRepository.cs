@@ -1,17 +1,14 @@
-﻿using Amazon.DynamoDBv2.DataModel;
-
-namespace RouletteProject.Infrastructure.Repo.Generics
+﻿namespace RouletteProject.Infrastructure.Repo.Generics
 {
+    using Amazon.DynamoDBv2.DataModel;
     using Domain.Interfaces.Repositories;
+    using RouletteProject.Domain.Entities.Generics;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using RouletteProject.Domain.Entities.Generics;
 
     public class GenericRepository<T> : IGenericRepository<T> where T : GenericEntity
     {
-        public RepositoryContext RepositoryContext { get; set; }
+        protected readonly RepositoryContext RepositoryContext;
 
         public GenericRepository(RepositoryContext repositoryContext)
         {
@@ -21,33 +18,44 @@ namespace RouletteProject.Infrastructure.Repo.Generics
         public List<T> GetAll()
         {
             var conditions = new List<ScanCondition>();
-            var result = this.RepositoryContext.ScanAsync<T>(conditions).GetRemainingAsync();
-
-            return result.Result;
+            var result = RepositoryContext.ScanAsync<T>(conditions);
+            
+            return ControlTaskError(() => result.GetRemainingAsync()).Result;
         }
 
         public T Details(Guid id)
         {
-            var result = this.RepositoryContext.LoadAsync<T>(id, new DynamoDBContextConfig { ConsistentRead = true });
+            var result = RepositoryContext.LoadAsync<T>(id, new DynamoDBContextConfig { ConsistentRead = true });
             return result.Result;
         }
 
         public T Create(T entity)
         {
-            this.RepositoryContext.SaveAsync(entity);
+            ControlTaskError(() => RepositoryContext.SaveAsync(entity));
             return entity;
         }
 
         public T Edit(T entity)
         {
-            this.RepositoryContext.SaveAsync(entity);
+            ControlTaskError(() => RepositoryContext.SaveAsync(entity));
             return entity;
         }
 
         public bool Delete(Guid id)
         {
-            var result = this.RepositoryContext.DeleteAsync<T>(id);
+            var result = ControlTaskError(() => RepositoryContext.DeleteAsync<T>(id));
             return result.IsCompleted;
+        }
+
+        public TP ControlTaskError<TP>(Func<TP> action)
+        {
+            dynamic result = action();
+            if (result.Exception != null)
+            {
+                throw result.Exception;
+            }
+
+            return result;
         }
     }
 }

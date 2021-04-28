@@ -1,11 +1,10 @@
-﻿using System;
-using RouletteProject.Domain.Interfaces.Services;
-using RouletteProject.Infrastructure.Helpers;
-
-namespace RouletteProject.Application.Services.Generics
+﻿namespace RouletteProject.Application.Services.Generics
 {
+    using Application.Interfaces.Generics;
+    using Domain.Interfaces.Services;
+    using Infrastructure.Helpers;
+    using System;
     using System.Collections.Generic;
-    using RouletteProject.Application.Interfaces.Generics;
 
     public class GenericApplication<T> : IGenericApplication<T>
     {
@@ -36,7 +35,7 @@ namespace RouletteProject.Application.Services.Generics
             return CatchErrorHelper.Try(() => GenericService.Edit(entity));
         }
 
-        public T Delete(Guid id)
+        public bool Delete(Guid id)
         {
             return CatchErrorHelper.Try(() => GenericService.Delete(id));
         }

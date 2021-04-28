@@ -1,10 +1,9 @@
 ﻿namespace RouletteProject.Infrastructure.Repo.Generics
 {
-    using Domain.Entities;
-    using System.Collections.Generic;
     using Amazon.DynamoDBv2;
     using Amazon.DynamoDBv2.DataModel;
-    using Amazon.Runtime;
+    using Domain.Entities;
+    using System.Collections.Generic;
 
     public class RepositoryContext : DynamoDBContext
     {
