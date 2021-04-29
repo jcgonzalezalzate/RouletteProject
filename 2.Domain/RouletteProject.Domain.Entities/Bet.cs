@@ -6,15 +6,15 @@
 
     public class Bet : GenericEntity
     {
-        public Roulette Roulette { get; set; }
+        public Guid RouletteId { get; set; }
 
         public DateTime BetDateTime { get; set; }
 
         public Guid UserId { get; set; }
 
-        public int? NumberToBet { get; set; }
+        public int NumberToBet { get; set; }
 
-        public Colour? ColourToBet { get; set; }
+        public Colour ColourToBet { get; set; }
 
         public decimal AmountToBet { get; set; }
 

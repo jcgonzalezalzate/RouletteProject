@@ -29,7 +29,12 @@ namespace RouletteProject.Infrastructure.Repo
             var json = CacheContext.GetStringAsync(id.ToString());
             if (json == null || json.Exception != null)
             {
-                throw new ArgumentException($"Invalid cache key {id}");
+                throw new ArgumentException($"Llave de cache inválida: {id}");
+            }
+
+            if (json.Result == null)
+            {
+                throw new ArgumentException($"Objeto de tipo {typeof(T).Name} no encontrado con Id {id}");
             }
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json.Result);

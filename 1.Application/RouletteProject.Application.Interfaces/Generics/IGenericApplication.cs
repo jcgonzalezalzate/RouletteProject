@@ -1,18 +1,20 @@
-﻿namespace RouletteProject.Application.Interfaces.Generics
+﻿
+namespace RouletteProject.Application.Interfaces.Generics
 {
+    using Domain.Entities.DTO;
     using System;
     using System.Collections.Generic;
 
     public interface IGenericApplication<T>
     {
-        List<T> GetAll();
+        GenericResponse<List<T>> GetAll();
 
-        T Details(Guid id);
+        GenericResponse<T> Details(Guid id);
 
-        T Create(T entity);
+        GenericResponse<T> Create(T entity);
 
-        T Edit(T entity);
+        GenericResponse<T> Edit(T entity);
 
-        bool Delete(Guid id);
+        GenericResponse<bool> Delete(Guid id);
     }
 }

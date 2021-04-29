@@ -1,19 +1,24 @@
 ﻿namespace RouletteProject.Infrastructure.Helpers
 {
+    using Domain.Entities.DTO;
     using System;
 
     public static class CatchErrorHelper
     {
-        public static T Try<T>(Func<T> action)
+        public static GenericResponse<T> Try<T>(Func<T> action)
         {
+            var response = new GenericResponse<T>();
             try
             {
-                return action();
+                response.Result = action();
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                response.HasErrors = true;
+                response.Errors = ex.Message.Split('|');
             }
+
+            return response;
         }
     }
 }

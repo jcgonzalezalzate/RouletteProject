@@ -5,6 +5,8 @@
 
     public interface IRouletteService
     {
-        List<Bet> CloseRoulette(Roulette roulette);
+        bool IsValidRouletteToOpen(Roulette entity);
+
+        Roulette CloseRoulette(Roulette roulette);
     }
 }

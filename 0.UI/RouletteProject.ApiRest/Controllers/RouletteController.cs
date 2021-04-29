@@ -2,6 +2,7 @@
 {
     using Application.Interfaces;
     using Domain.Entities;
+    using Domain.Entities.DTO;
     using Microsoft.AspNetCore.Mvc;
     using System;
     using System.Collections.Generic;
@@ -19,31 +20,28 @@
 
         [HttpPost]
         [Route("Create")]
-        public Guid Create()
+        public GenericResponse<Guid> Create()
         {
-            var roulette = new Roulette { Id = Guid.NewGuid() };
-            return RouletteApplication.Create(roulette);
+            return RouletteApplication.Create();
         }
 
         [HttpPut]
         [Route("OpenRoulette")]
-        public bool OpenRoulette(Guid id)
+        public GenericResponse<bool> OpenRoulette(Guid id)
         {
-            var roulette = new Roulette { Id = id };
-            return RouletteApplication.OpenRoulette(roulette);
+            return RouletteApplication.OpenRoulette(id);
         }
         
         [HttpPut]
         [Route("CloseRoulette")]
-        public IEnumerable<Bet> CloseRoulette(Guid id)
+        public GenericResponse<Roulette> CloseRoulette(Guid id)
         {
-            var roulette = new Roulette { Id = id };
-            return RouletteApplication.CloseRoulette(roulette);
+            return RouletteApplication.CloseRoulette(id);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public IEnumerable<Roulette> GetAll()
+        public GenericResponse<List<Roulette>> GetAll()
         {
             return RouletteApplication.GetAll();
         }

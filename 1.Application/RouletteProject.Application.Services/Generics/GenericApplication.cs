@@ -1,6 +1,8 @@
-﻿namespace RouletteProject.Application.Services.Generics
+﻿
+namespace RouletteProject.Application.Services.Generics
 {
     using Application.Interfaces.Generics;
+    using Domain.Entities.DTO;
     using Domain.Interfaces.Services;
     using Infrastructure.Helpers;
     using System;
@@ -15,27 +17,27 @@
             GenericService = genericService;
         }
 
-        public List<T> GetAll()
+        public GenericResponse<List<T>> GetAll()
         {
             return CatchErrorHelper.Try(() => GenericService.GetAll());
         }
 
-        public T Details(Guid id)
+        public GenericResponse<T> Details(Guid id)
         {
             return CatchErrorHelper.Try(() => GenericService.Details(id));
         }
 
-        public T Create(T entity)
+        public GenericResponse<T> Create(T entity)
         {
             return CatchErrorHelper.Try(() => GenericService.Create(entity));
         }
 
-        public T Edit(T entity)
+        public GenericResponse<T> Edit(T entity)
         {
             return CatchErrorHelper.Try(() => GenericService.Edit(entity));
         }
 
-        public bool Delete(Guid id)
+        public GenericResponse<bool> Delete(Guid id)
         {
             return CatchErrorHelper.Try(() => GenericService.Delete(id));
         }

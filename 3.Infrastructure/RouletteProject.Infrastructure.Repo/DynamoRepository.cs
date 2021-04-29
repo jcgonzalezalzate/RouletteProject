@@ -8,20 +8,9 @@
 
     public class DynamoRepository : GenericRepository<Roulette>, IDynamoRepository
     {
-        protected readonly IDistributedCache CacheContext;
+        public DynamoRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        {
 
-        public DynamoRepository(
-            RepositoryContext repositoryContext,
-            IDistributedCache cacheContext)
-            : base(repositoryContext)
-        {
-            CacheContext = cacheContext;
-        }
-        
-        public IEnumerable<Bet> CloseRoulette(Roulette roulette)
-        {
-            RepositoryContext.SaveAsync(roulette);
-            return new List<Bet>();
         }
     }
 }

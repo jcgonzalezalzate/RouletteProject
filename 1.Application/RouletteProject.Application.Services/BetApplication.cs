@@ -1,13 +1,14 @@
-﻿using RouletteProject.Domain.Interfaces.Repositories;
-
-namespace RouletteProject.Application.Services
+﻿namespace RouletteProject.Application.Services
 {
     using Domain.Entities;
+    using Domain.Entities.DTO;
+    using Domain.Interfaces.Repositories;
     using Domain.Interfaces.Services;
     using Generics;
     using Infrastructure.Helpers;
     using Interfaces;
     using System;
+    using System.Collections.Generic;
 
     public class BetApplication : GenericApplication<Bet>, IBetApplication
     {
@@ -25,19 +26,20 @@ namespace RouletteProject.Application.Services
             CacheRepository = cacheRepository;
         }
 
-        public Bet GetABet(Guid id)
+        public GenericResponse<Bet> GetABet(Guid id)
         {
             return CatchErrorHelper.Try(() => BetService.GetABet(id));
         }
 
-        public bool SaveABet(Bet bet)
+        public GenericResponse<bool> SaveABet(Bet bet)
         {
             return CatchErrorHelper.Try(() =>
             {
-                var roulette = CacheRepository.Get<Roulette>(bet.Roulette.Id);
-                bet.Roulette = roulette;
-                bet.Roulette.Bets.Add(bet);
+                var roulette = CacheRepository.Get<Roulette>(bet.RouletteId);
+                roulette.Bets ??= new List<Bet>();
+                roulette.Bets.Add(bet);
                 BetService.IsValidBet(bet);
+                BetService.IsValidRoulette(roulette);
                 BetService.AssignPrize(bet);
                 CacheRepository.Save(roulette.Id, roulette);
                 return true;

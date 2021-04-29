@@ -60,7 +60,7 @@ namespace RouletteProject.ApiRest
 
             services.AddControllers();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(c => { c.EnableAnnotations(); });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -68,7 +68,7 @@ namespace RouletteProject.ApiRest
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Roulette API");
                 c.RoutePrefix = string.Empty;
             });
 

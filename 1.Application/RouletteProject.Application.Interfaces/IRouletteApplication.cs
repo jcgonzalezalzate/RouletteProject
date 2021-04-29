@@ -1,16 +1,17 @@
-﻿namespace RouletteProject.Application.Interfaces
+﻿
+namespace RouletteProject.Application.Interfaces
 {
     using Domain.Entities;
+    using Domain.Entities.DTO;
     using Generics;
     using System;
-    using System.Collections.Generic;
 
     public interface IRouletteApplication : IGenericApplication<Roulette>
     {
-        Guid Create(Roulette roulette);
+        GenericResponse<Guid> Create();
         
-        bool OpenRoulette(Roulette roulette);
+        GenericResponse<bool> OpenRoulette(Guid id);
 
-        IEnumerable<Bet> CloseRoulette(Roulette roulette);
+        GenericResponse<Roulette> CloseRoulette(Guid id);
     }
 }

@@ -9,6 +9,8 @@
 
         bool IsValidBet(Bet bet);
 
+        bool IsValidRoulette(Roulette roulette);
+
         void AssignPrize(Bet bet);
     }
 }
