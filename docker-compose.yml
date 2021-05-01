@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  cache:
+    image: redis:alpine3.13
+    ports:
+      - 6379:6379
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+        
+  dynamo:
+    command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    image: amazon/dynamodb-local
+    container_name: dynamo
+    ports:
+      - 8000:8000
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.7
+  
+  api:
+    image: rouletteapi
+    environment:
+      ASPNETCORE_URLS: "http://+:45656"
+      ASPNETCORE_ENVIRONMENT: "Production"
+      DYNAMO_LOCALSTACK_HOSTNAME: "http://dynamo:8000/"
+      REDIS_LOCALSTACK_HOSTNAME: "cache:6379"
+      MAXIMUM_ROULLETTE_NUMBER: "36"
+      MINIMUM_ROULLETTE_NUMBER: "0"
+      MULTIPLYING_FACTOR_BY_COLOUR: "1.8"
+      MULTIPLYING_FACTOR_BY_NUMBER: "5"
+    ports:
+      - 45656:45656
+    depends_on: 
+      - cache
+      - dynamo
+    links:
+      - "cache"
+      - "dynamo"
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
