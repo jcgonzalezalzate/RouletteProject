@@ -13,7 +13,13 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "MULTIPLYING_FACTOR_BY_NUMBER": "5",
+        "MAXIMUM_ROULLETTE_NUMBER": "36",
+        "REDIS_LOCALSTACK_HOSTNAME": "localhost:6379",
+        "MULTIPLYING_FACTOR_BY_COLOUR": "1,8",
+        "DYNAMO_LOCALSTACK_HOSTNAME": "http://localhost:8000/",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "MINIMUM_ROULLETTE_NUMBER": "0"
       }
     },
     "RouletteProject.ApiRest": {

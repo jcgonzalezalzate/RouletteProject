@@ -1,4 +1,6 @@
-﻿namespace RouletteProject.Domain.Services
+﻿using RouletteProject.Domain.Entities.Configuration;
+
+namespace RouletteProject.Domain.Services
 {
     using Entities;
     using Entities.Enums;
@@ -11,9 +13,12 @@
     {
         protected readonly IDynamoRepository DynamoRepository;
 
-        public RouletteService(IDynamoRepository rouletteRepository)
+        protected readonly BetConfiguration BetConfiguration;
+
+        public RouletteService(IDynamoRepository rouletteRepository, BetConfiguration betConfiguration)
         {
             DynamoRepository = rouletteRepository;
+            BetConfiguration = betConfiguration;
         }
 
         public bool IsValidRouletteToOpen(Roulette roulette)
@@ -29,7 +34,7 @@
 
         public Roulette CloseRoulette(Roulette roulette)
         {
-            roulette.WinningNumber = new Random().Next(0, 36);
+            roulette.WinningNumber = new Random().Next(BetConfiguration.MinimumRoulletteNumber, BetConfiguration.MaximumRoulletteNumber);
             roulette.WinningColour = roulette.WinningNumber % 2 == 0 ? Colour.Red : Colour.Black;
 
             foreach (var bet in roulette.Bets)

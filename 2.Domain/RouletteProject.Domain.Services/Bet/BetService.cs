@@ -1,4 +1,6 @@
-﻿namespace RouletteProject.Domain.Services.Bet
+﻿using RouletteProject.Domain.Entities.Configuration;
+
+namespace RouletteProject.Domain.Services.Bet
 {
     using Entities;
     using Entities.Enums;
@@ -12,9 +14,12 @@
     {
         protected readonly ICacheRepository CacheRepository;
 
-        public BetService(ICacheRepository cacheRepository)
+        protected readonly BetConfiguration BetConfiguration;
+
+        public BetService(ICacheRepository cacheRepository, BetConfiguration betConfiguration)
         {
             CacheRepository = cacheRepository;
+            BetConfiguration = betConfiguration;
         }
 
         public Bet GetABet(Guid id)
@@ -49,12 +54,12 @@
         {
             if (bet.NumberToBet > 0)
             {
-                bet.AmountToWin = bet.AmountToBet * 5;
+                bet.AmountToWin = bet.AmountToBet * BetConfiguration.MultiplyingFactorByNumber;
             }
 
             if (bet.ColourToBet > 0)
             {
-                bet.AmountToWin = bet.AmountToBet * (decimal) 1.8;
+                bet.AmountToWin = bet.AmountToBet * BetConfiguration.MultiplyingFactorByColour;
             }
         }
     }
