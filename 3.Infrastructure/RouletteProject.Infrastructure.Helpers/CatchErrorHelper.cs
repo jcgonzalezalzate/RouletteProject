@@ -1,4 +1,7 @@
-﻿namespace RouletteProject.Infrastructure.Helpers
+﻿using Serilog;
+using Serilog.Core;
+
+namespace RouletteProject.Infrastructure.Helpers
 {
     using Domain.Entities.DTO;
     using System;
@@ -14,6 +17,7 @@
             }
             catch (Exception ex)
             {
+                Logger.Current.Error("Error: " + ex.Message, ex);
                 response.HasErrors = true;
                 response.Errors = ex.Message.Split('|');
             }
