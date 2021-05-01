@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.Application\RouletteProject.Application.Interfaces\RouletteProject.Application.Interfaces.csproj" />
+    <ProjectReference Include="..\..\1.Application\RouletteProject.Application.Services\RouletteProject.Application.Services.csproj" />
+    <ProjectReference Include="..\..\2.Domain\RouletteProject.Domain.Entities\RouletteProject.Domain.Entities.csproj" />
+    <ProjectReference Include="..\..\2.Domain\RouletteProject.Domain.Interfaces\RouletteProject.Domain.Interfaces.csproj" />
+    <ProjectReference Include="..\..\2.Domain\RouletteProject.Domain.Services\RouletteProject.Domain.Services.csproj" />
+    <ProjectReference Include="..\RouletteProject.Infrastructure.Repo\RouletteProject.Infrastructure.Repo.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\3.1.8\ref\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
